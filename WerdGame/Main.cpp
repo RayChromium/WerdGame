@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <random>
 
 int main()
 {
@@ -21,6 +22,11 @@ int main()
 			five_words.push_back(line);
 		}
 	}
+
+	std::mt19937 rng(std::random_device{}());
+	std::uniform_int_distribution<int> dist(0, five_words.size() -1 );
+	//get a random, word as the guess result
+	const std::string target = five_words[dist(rng)];
 
 	return 0;
 }
