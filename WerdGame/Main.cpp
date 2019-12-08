@@ -4,6 +4,18 @@
 #include <iostream>
 #include <random>
 
+bool vector_contain_word(const std::vector<std::string>& vec, const std::string& word)
+{
+	for (const auto& w : vec)
+	{
+		if (w == word)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 int main()
 {
 	std::vector<std::string> five_words;
@@ -40,6 +52,12 @@ int main()
 			std::cout << "I said FIVE letter word, asshole. " << std::endl;
 			continue;
 		}
+		if (!vector_contain_word(five_words, guess))
+		{
+			std::cout << "? That's not even a god damnded word, stupid asshole." << std::endl;
+			continue;
+		}
+
 	}
 
 	return 0;
