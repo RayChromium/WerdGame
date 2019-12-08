@@ -28,5 +28,19 @@ int main()
 	//get a random, word as the guess result
 	const std::string target = five_words[dist(rng)];
 
+	while (true)
+	{
+		std::cout << "Guess a five letter word: " << std::endl;
+		std::string guess;
+		std::getline(std::cin, guess);
+
+		//First check: see if the input is 5 letters long
+		if (guess.size() != 5)
+		{
+			std::cout << "I said FIVE letter word, asshole. " << std::endl;
+			continue;
+		}
+	}
+
 	return 0;
 }
