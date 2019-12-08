@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <cctype>
 
+
+
 bool vector_contain_word(const std::vector<std::string>& vec, const std::string& word)
 {
 	for (const auto& w : vec)
@@ -54,6 +56,20 @@ int score_match(const std::string& word1, const std::string& word2)
 	return score;
 }
 
+//return a intersection of words based on 2 input containers
+std::vector<std::string> get_intersection(const std::vector<std::string>& vec1, const std::vector<std::string>& vec2)
+{
+	std::vector<std::string> intersection;
+	for (const auto& w : vec1)
+	{
+		if (vector_contain_word(vec2 , w))
+		{
+			intersection.push_back(w);
+		}
+	}
+	return intersection;
+}
+
 int main()
 {
 	std::vector<std::string> five_words;
@@ -73,10 +89,30 @@ int main()
 		}
 	}
 
+	std::vector<std::string> freq_words;
+	{
+		std::ifstream freq_words_file("20k.txt");
+		for (std::string line; std::getline(freq_words_file, line);)
+		{
+			if (line.empty())
+			{
+				continue;
+			}
+			freq_words.push_back(line);
+		}
+	}
+
+	//Choose only the first 2000 most common words to reduce the difficulty
+	//That is, to use the `resize()` function in std::vector
+	freq_words.resize(2000);
+
+	//get the intersection:
+	auto filtered_words = get_intersection(five_words, freq_words);
+
 	std::mt19937 rng(std::random_device{}());
-	std::uniform_int_distribution<int> dist(0, five_words.size() -1 );
+	std::uniform_int_distribution<int> dist(0, filtered_words.size() -1 );
 	//get a random, word as the guess result
-	const std::string target = five_words[dist(rng)];
+	const std::string target = filtered_words[dist(rng)];
 
 	while (true)
 	{
