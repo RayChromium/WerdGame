@@ -4,6 +4,7 @@
 #include <iostream>
 #include <random>
 #include <algorithm>
+#include <cctype>
 
 bool vector_contain_word(const std::vector<std::string>& vec, const std::string& word)
 {
@@ -82,6 +83,11 @@ int main()
 		std::cout << "Guess a five letter word: " << std::endl;
 		std::string guess;
 		std::getline(std::cin, guess);
+
+		for (auto& c : guess)
+		{
+			c = std::tolower(c);
+		}
 
 		//First check: see if the input is 5 letters long
 		if (guess.size() != 5)
